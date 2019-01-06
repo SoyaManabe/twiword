@@ -1,0 +1,23 @@
+#main {
+    max-width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+.container {
+    max-width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#profimg {
+    width: 50%;
+}
+
+.container {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+footer {
+    clear: left;
+}
