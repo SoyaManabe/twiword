@@ -10,7 +10,7 @@
     <body>
         <header>
                 <nav class="navbar navbar-expand navbar-light bg-light">
-                        <a class="navbar-brand" href="userhome.html"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
+                        <a class="navbar-brand" href="{% url 'collect:userhome' %}"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item"><a class="nav-link" href="{% url 'collect:userhome' %}">HOME</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'collect:quiz' %}">Quiz</a></li>
@@ -24,7 +24,7 @@
                     <input class="btn btn-info" type="button" value="Sort">
                 <p>↑更新順、アルファベット順ってなったらいいね</p>
                 <article id="wordlist">
-                        <table>
+                        <table align="center">
                                 <tr>
                                     <th>英語</th>
                                     <th>日本語</th>
@@ -75,17 +75,17 @@
                                 </tr>
                         </table>
                 </article>
-                <a class="btn btn-info my-3" href="list.html">Update</a>
+                <a class="btn btn-info my-3" href="{% url 'collect:userhome' %}">Update</a>
             </div>
         </div>
         <footer class="bd-footer text-muted bg-light">
                 <div class="container">
                     <h5>Links</h5>
                     <ul class="bd-footer-links list-unstyled">
-                            <li><a href="{% url 'collect:userhome' %}">HOME</a></li>
-                            <li><a href="{% url 'collect:quiz' %}">Quiz</a></li>
-                            <li><a href="{% url 'collect:list' %}">Word List</a></li>
-                            <li><a href="{% url 'collect:index' %}">SignOut</a></li>
+                        <li><a href="{% url 'collect:userhome' %}">HOME</a></li>
+                        <li><a href="{% url 'collect:quiz' %}">Quiz</a></li>
+                        <li><a href="{% url 'collect:list' %}">Word List</a></li>
+                        <li><a href="{% url 'collect:index' %}">SignOut</a></li>
                     </ul>
                     <small>&copy; 2019 TwiWord.</small>
                 </div>

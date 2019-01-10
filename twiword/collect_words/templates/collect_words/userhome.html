@@ -10,11 +10,11 @@
     <body>
         <header>
             <nav class="navbar navbar-expand navbar-light bg-light">
-                <a class="navbar-brand" href="userhome.html"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
+                <a class="navbar-brand" href="{% url 'collect:userhome' %}"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
                 <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'collect:userhome' %}">HOME</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'collect:userhome' %}">HOME</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'collect:quiz' %}">Quiz</a></li>
-                        <li class="nav-item active"><a class="nav-link" href="{% url 'collect:list' %}">Word List</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'collect:list' %}">Word List</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">SignOut</a></li>
                 </ul>
             </nav>            
@@ -25,7 +25,7 @@
                             <p><img src="{% static "collect_words/sources/logo/main_visu.png" %}" alt="mainvis"></p>
                         </div>
                         <p id="col"><strong>You can add new vocaburaries from Twitter!</strong></p>
-                        <a class="btn btn-info" href="result.html">Collect from Twitter!</a>
+                        <a class="btn btn-info" href="{% url 'collect:result' %}">Collect from Twitter!</a>
                     </div>
                     <hr>
                     <div>

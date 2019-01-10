@@ -10,7 +10,7 @@
     <body>
         <header>
                 <nav class="navbar navbar-expand navbar-light bg-light">
-                        <a class="navbar-brand" href="userhome.html"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
+                        <a class="navbar-brand" href="{% url 'collect:userhome' %}"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
                         <ul class="navbar-nav mr-auto">
                                 <li class="nav-item"><a class="nav-link" href="{% url 'collect:userhome' %}">HOME</a></li>
                                 <li class="nav-item"><a class="nav-link" href="{% url 'collect:quiz' %}">Quiz</a></li>
@@ -67,7 +67,7 @@
                     </table>
                 </div>
                 <div></div>   
-                    <a class='btn btn-success' href='userhome.html'>HOME</a>
+                    <a class='btn btn-success' href="{% url 'collect:userhome' %}">HOME</a>
                 </div>
             </div>
         </div>
