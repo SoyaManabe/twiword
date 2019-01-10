@@ -3,25 +3,26 @@
     <head>
         <meta charset="utf-8">
         <title>TwiWord</title>
-        <link rel="stylesheet" href="css/style.css">
+        {% load static %}
+        <link rel="stylesheet" href="{% static "collect_words/css/style.css" %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
     <body>
         <header>
             <nav class="navbar navbar-expand navbar-light bg-light">
-                <a class="navbar-brand" href="userhome.html"><img src="sources/logo/1_Primary_logo_on_transparent_295x65.png" alt=""></a>
+                <a class="navbar-brand" href="userhome.html"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="userhome.html">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
-                    <li class="nav-item"><a class="nav-link" href="list.html">Word List</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'collect:userhome' %}">HOME</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'collect:quiz' %}">Quiz</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'collect:list' %}">Word List</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">SignOut</a></li>
                 </ul>
             </nav>            
         </header>
         <div class="container">
                     <div id="col">
                         <div id="main_visu">
-                            <p><img src="sources/logo/main_visu.png" alt="mainvis"></p>
+                            <p><img src="{% static "collect_words/sources/logo/main_visu.png" %}" alt="mainvis"></p>
                         </div>
                         <p id="col"><strong>You can add new vocaburaries from Twitter!</strong></p>
                         <a class="btn btn-info" href="result.html">Collect from Twitter!</a>
@@ -30,7 +31,7 @@
                     <div>
                             <div class="col-3 float-left my-3 ">
                                 <aside>
-                                    <img id="profimg" src="sources/a3D2dDGx_bigger.jpg" alt="twitterimg">
+                                    <img id="profimg" src="{% static "collect_words/sources/a3D2dDGx_bigger.jpg" %}" alt="twitterimg">
                                         <h2>UserName</h2>
                                         <h3>@UserName</h3>
                                 </aside>
@@ -53,10 +54,10 @@
             <div class="container">
                 <h5>Links</h5>
                 <ul class="bd-footer-links list-unstyled">
-                    <li><a href="userhome.html">HOME</a></li>
-                    <li><a href="quiz.html">Quiz</a></li>
-                    <li><a href="list.html">Word List</a></li>
-                    <li><a href="index.html">Logout</a></li>
+                    <li><a href="{% url 'collect:userhome' %}">HOME</a></li>
+                    <li><a href="{% url 'collect:quiz' %}">Quiz</a></li>
+                    <li><a href="{% url 'collect:list' %}">Word List</a></li>
+                    <li><a href="{% url 'collect:index' %}">SignOut</a></li>
                 </ul>
                 <small>&copy; 2019 TwiWord.</small>
             </div>
