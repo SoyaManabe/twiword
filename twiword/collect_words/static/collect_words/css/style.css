@@ -2,6 +2,7 @@
     max-width: 50%;
     margin: 0 auto;
     text-align: center;
+    background-color: blue;
 }
 .container {
     max-width: 50%;
@@ -20,4 +21,9 @@
 
 footer {
     clear: left;
+}
+
+#wordlist {
+    text-align: center;
+    background-color: aquamarine;
 }

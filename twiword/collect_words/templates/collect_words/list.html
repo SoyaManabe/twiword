@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>TwiWord</title>
         {% load static %}
-        <link rel="stylesheet" href="{% static "collect_words/css/style.css" %}">
+        <link rel="stylesheet" href="{% static 'collect_words/css/style.css' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
     <body>
@@ -23,7 +23,7 @@
             <div id="main" class="my-3">
                     <input class="btn btn-info" type="button" value="Sort">
                 <p>↑更新順、アルファベット順ってなったらいいね</p>
-                <article>
+                <article id="wordlist">
                         <table>
                                 <tr>
                                     <th>英語</th>
@@ -31,7 +31,23 @@
                                     <th>品詞</th>
                                     <th>出題</th>
                                 </tr>
-                                <tr>
+                                {% if words %}
+                                    {% for word in words %}
+                                        <tr>
+                                        <td>{{ word.trans }}</td>
+                                        <td>{{ word.word }}</td>
+                                        <td>{{ word.category }}</td>
+                                        {% if word.quiz == True %}
+                                            <td><input class="select" type="checkbox" checked></td>
+                                        {% else %}
+                                            <td><input class="select" type="checkbox" ></td>
+                                        {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No words available</p>
+                                {% endif %}
+                                    <tr>
                                     <td>today</td>
                                     <td>今日</td>
                                     <td>名詞</td>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .sepjap import sep
+from .models import Words
 
 #indexは移動するかもしれません
 def index(request):
@@ -25,7 +26,11 @@ def quiz(request):
     return render(request, 'collect_words/quiz.html')
 
 def wordlist(request):
-    return render(request, 'collect_words/list.html')
+    words = Words.objects.all()
+    context = {
+        'words': words,
+    }
+    return render(request, 'collect_words/list.html', context)
 
 def result(request):
     return render(request, 'collect_words/result.html')
