@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>index</title>
-    </head>
-    <body>
-        <h1>TwiWord</h1>
-        <p>This app can quote sentence from your Twitter timeline and make word list in English.</p>
-        <h3>Get Start</h3>
-        <input class="getword" type="button" value="Get new words">
-            <a href='{% url "collect:catch" %}'>新規</a>
-        </input>
-    </body>
-</html>
+{% extends 'collect_words/base.html' %}
+    {% block content %}
+    {% load static %}
+            <div id="main">
+                <article>
+                    <div id="main_visu">
+                        <p><img src="{% static "collect_words/sources/logo/main_visu.png" %}" alt="mainvis"></p>
+                    </div>
+                    <div id="How to Use">
+                        <h1>How to Use</h1>
+                        <h2>Follow twitter</h2>
+                        <h2>Sign in this app</h2>
+                        <h2>collect words from your tweets</h2>
+                        <h2>solving quiz!</h2>
+                        <a class="btn btn-info" href="{% url 'collect:userhome' userurl %}">Get Start</a>
+                    </div>
+                </article>
+            </div>
+    {% endblock %}

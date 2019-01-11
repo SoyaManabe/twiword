@@ -1,7 +1,7 @@
 # TwiWord
 
 ## Description
-This application makes personalized English Flashcard from your tweets.
+This application makes personalized English Flashcard from your tweets.yeah.
 
 ## Routes
 randingpage

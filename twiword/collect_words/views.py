@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .sepjap import sep
+from .models import Words
 
+#indexは移動するかもしれません
 def index(request):
     return render(request, 'collect_words/index.html')
 
@@ -16,3 +18,36 @@ def catch(request):
     }
     print(results)
     return render(request, 'collect_words/catch.html',context)
+
+def userhome(request, userurl):
+    words = Words.objects.all()
+    context = {
+        'words': words,
+        'userurl': userurl,
+    }
+    return render(request, 'collect_words/userhome.html', context)
+
+def quiz(request, userurl):
+    words = Words.objects.all()
+    context = {
+        'words': words,
+        'userurl': userurl,
+    }
+    return render(request, 'collect_words/quiz.html', context)
+
+def wordlist(request, userurl):
+    words = Words.objects.all()
+    context = {
+        'words': words,
+        'userurl': userurl,
+    }
+    return render(request, 'collect_words/list.html', context)
+
+def result(request, userurl):
+    words = Words.objects.all()
+    context = {
+        'words': words,
+        'userurl': userurl,
+    }
+    return render(request, 'collect_words/result.html', context)
+

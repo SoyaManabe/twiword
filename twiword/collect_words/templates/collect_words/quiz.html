@@ -1,0 +1,19 @@
+{% extends 'collect_words/base.html' %}
+    {% block content %}
+        <div id="main">
+            <article>
+                <h1>Quiz</h1>
+                <h2>apple</h2>
+                <p>This is an apple</p>
+                <input class="btn btn-info" type="button" value="Answer">
+                <div id="answer">
+                    <h2>りんご</h2>
+                    <p>これはりんご</p>
+                    <p>名詞</p>
+                    <p>覚えた: <input type="checkbox"></p>
+                    <a class='btn btn-info' href="{% url 'collect:quiz' userurl%}">NEXT</a>                    
+                </div>
+            </article>
+        </div>
+    {% endblock %}
+        
