@@ -19,19 +19,35 @@ def catch(request):
     print(results)
     return render(request, 'collect_words/catch.html',context)
 
-def userhome(request):
-    return render(request, 'collect_words/userhome.html')
-
-def quiz(request):
-    return render(request, 'collect_words/quiz.html')
-
-def wordlist(request):
+def userhome(request, userurl):
     words = Words.objects.all()
     context = {
         'words': words,
+        'userurl': userurl,
+    }
+    return render(request, 'collect_words/userhome.html', context)
+
+def quiz(request, userurl):
+    words = Words.objects.all()
+    context = {
+        'words': words,
+        'userurl': userurl,
+    }
+    return render(request, 'collect_words/quiz.html', context)
+
+def wordlist(request, userurl):
+    words = Words.objects.all()
+    context = {
+        'words': words,
+        'userurl': userurl,
     }
     return render(request, 'collect_words/list.html', context)
 
-def result(request):
-    return render(request, 'collect_words/result.html')
+def result(request, userurl):
+    words = Words.objects.all()
+    context = {
+        'words': words,
+        'userurl': userurl,
+    }
+    return render(request, 'collect_words/result.html', context)
 

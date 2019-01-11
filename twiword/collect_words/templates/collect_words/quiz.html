@@ -1,53 +1,19 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>TwiWord</title>
-        {% load static %}
-        <link rel="stylesheet" href="{% static "collect_words/css/style.css" %}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    </head>
-    <body>
-        <header>
-                <nav class="navbar navbar-expand navbar-light bg-light">
-                        <a class="navbar-brand" href="{% url 'collect:userhome' %}"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
-                        <ul class="navbar-nav mr-auto">
-                                <li class="nav-item"><a class="nav-link" href="{% url 'collect:userhome' %}">HOME</a></li>
-                                <li class="nav-item active"><a class="nav-link" href="{% url 'collect:quiz' %}">Quiz</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{% url 'collect:list' %}">Word List</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">SignOut</a></li>
-                        </ul>
-                </nav>          
-        </header>
-        <div id="wrapper">
-            <div id="main">
-                <article>
-                    <h1>Quiz</h1>
-                    <h2>apple</h2>
-                    <p>This is an apple</p>
-                    <input class="btn btn-info" type="button" value="Answer">
-                    <div id="answer">
-                        <h2>りんご</h2>
-                        <p>これはりんご</p>
-                        <p>名詞</p>
-                        <p>覚えた: <input type="checkbox"></p>
-                        <a class='btn btn-info' href="{% url 'collect:quiz' %}">NEXT</a>
-                        
-                    </div>
-                </article>
-            </div>
-        </div>
-        <footer class="bd-footer text-muted bg-light">
-                <div class="container">
-                    <h5>Links</h5>
-                    <ul class="bd-footer-links list-unstyled">
-                            <li><a href="{% url 'collect:userhome' %}">HOME</a></li>
-                            <li><a href="{% url 'collect:quiz' %}">Quiz</a></li>
-                            <li><a href="{% url 'collect:list' %}">Word List</a></li>
-                            <li><a href="{% url 'collect:index' %}">SignOut</a></li>
-                    </ul>
-                    <small>&copy; 2019 TwiWord.</small>
+{% extends 'collect_words/base.html' %}
+    {% block content %}
+        <div id="main">
+            <article>
+                <h1>Quiz</h1>
+                <h2>apple</h2>
+                <p>This is an apple</p>
+                <input class="btn btn-info" type="button" value="Answer">
+                <div id="answer">
+                    <h2>りんご</h2>
+                    <p>これはりんご</p>
+                    <p>名詞</p>
+                    <p>覚えた: <input type="checkbox"></p>
+                    <a class='btn btn-info' href="{% url 'collect:quiz' userurl%}">NEXT</a>                    
                 </div>
-            </footer>
-    </body>
-</html_lang>
+            </article>
+        </div>
+    {% endblock %}
+        
