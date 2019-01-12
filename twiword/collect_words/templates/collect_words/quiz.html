@@ -3,13 +3,23 @@
         <div id="main">
             <article>
                 <h1>Quiz</h1>
-                <h2>apple</h2>
-                <p>This is an apple</p>
+                {% if word %}
+                            <h2>{{ word.trans }}</h2>
+                {% else %}
+                    <p>No words available</p>
+                {% endif %}
+                <br>
                 <input class="btn btn-info" type="button" value="Answer">
                 <div id="answer">
-                    <h2>りんご</h2>
-                    <p>これはりんご</p>
-                    <p>名詞</p>
+                    <h2>{{ word.word }}</h2>
+                    <h4>品詞</h4>
+                    {% if word.category == 5 %}
+                        <p>名詞</p>
+                    {% else %}
+                        <p>動詞</p>
+                    {% endif %}
+                    <h4>元のツイート:</h4>
+                    <p>{{ word.tweet }}</p>
                     <p>覚えた: <input type="checkbox"></p>
                     <a class='btn btn-info' href="{% url 'collect:quiz' userurl%}">NEXT</a>                    
                 </div>

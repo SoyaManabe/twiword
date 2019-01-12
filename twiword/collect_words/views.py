@@ -28,9 +28,9 @@ def userhome(request, userurl):
     return render(request, 'collect_words/userhome.html', context)
 
 def quiz(request, userurl):
-    words = Words.objects.all()
+    word = Words.objects.filter(user=userurl).order_by("?").first()
     context = {
-        'words': words,
+        'word': word,
         'userurl': userurl,
     }
     return render(request, 'collect_words/quiz.html', context)
