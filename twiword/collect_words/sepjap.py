@@ -2,7 +2,7 @@ from janome.tokenizer import Tokenizer
 from janome.analyzer import Analyzer
 from janome.tokenfilter import *
 t = Tokenizer()
-text = "リンゴは英語でappleという"
+text = "今日は晴れ"
 token_filters = [POSKeepFilter('名詞'), TokenCountFilter()]
 a = Analyzer(token_filters=token_filters)
 for k, v in a.analyze(text):

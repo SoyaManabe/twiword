@@ -1,0 +1,7 @@
+{% extends 'user_auth/base.html' %}
+{% block content %}
+{% load static %}
+<div>
+    <button type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterログイン</button>
+</div>
+{% endblock %}

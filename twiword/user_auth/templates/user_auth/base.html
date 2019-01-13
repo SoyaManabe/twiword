@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>TwiWord</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'collect_words/css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    </head>
+    <body>
+        <header>
+                <nav class="navbar navbar-expand navbar-light bg-light">
+                        <a class="navbar-brand" href="{% url 'collect:index' %}"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">HOME</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">Quiz</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="{% url 'collect:index' %}">Word List</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">SignOut</a></li>
+                        </ul>
+                </nav>           
+        </header>
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+        <footer class="bd-footer text-muted bg-light">
+                <div class="container">
+                    <h5>Links</h5>
+                    <ul class="bd-footer-links list-unstyled">
+                        <li><a href="{% url 'collect:index' %}">HOME</a></li>
+                        <li><a href="{% url 'collect:index' %}">Quiz</a></li>
+                        <li><a href="{% url 'collect:index' %}">Word List</a></li>
+                        <li><a href="{% url 'collect:index' %}">SignOut</a></li>
+                    </ul>
+                    <small>&copy; 2019 TwiWord.</small>
+                </div>
+            </footer>
+    </body>
+</html>

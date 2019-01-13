@@ -1,0 +1,11 @@
+{% extends 'user_auth/base.html' %}
+{% block content %}
+{% load static %}
+<div>
+    <p>ログアウトしました</p>
+    <p>
+        <a class="btn btn-info" href="/user/login">ログインページへ</a>
+    </p>
+    <button type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterログイン</button>
+</div>
+{% endblock %}
