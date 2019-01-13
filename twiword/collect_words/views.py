@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .sepjap import sep
 from .models import Words
 
+from social_django.models import UserSocialAuth
+
 #indexは移動するかもしれません
 def index(request):
     return render(request, 'collect_words/index.html')
@@ -21,9 +23,12 @@ def catch(request):
 
 def userhome(request, userurl):
     words = Words.objects.all()
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    print(user.access_token)
     context = {
         'words': words,
         'userurl': userurl,
+        'user': user,
     }
     return render(request, 'collect_words/userhome.html', context)
 
