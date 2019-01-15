@@ -13,7 +13,7 @@
         <a href="{% url 'user_auth:logout' %}"><button type="button" >ログアウト</button></a>
     </div>
     <div>
-        <a href="{% url 'collect:userhome' 1 %}"><button type="button" >ログアウト</button></a>
+        <a href="{% url 'collect:userhome'  user.access_token.user_id  %}"><button type="button" >マイページへ</button></a>
     </div>
 </div>
 {% endblock %}

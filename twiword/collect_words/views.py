@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .sepjap import sep
 from .models import Words
+from .models import Users
 
 from social_django.models import UserSocialAuth
 
@@ -22,18 +23,25 @@ def catch(request):
     return render(request, 'collect_words/catch.html',context)
 
 def userhome(request, userurl):
-    words = Words.objects.all()
     user = UserSocialAuth.objects.get(user_id=request.user.id)
-    print(user.access_token)
+    registeredUser = Users.objects.get(userId=userurl)
+    words = Words.objects.filter(user=registeredUser)
+    numberOfWords = words.count()
+    numberOfCompleted = words.filter(quiz=True).count()
+    percentageOfProgress = numberOfCompleted / numberOfWords * 100
     context = {
         'words': words,
         'userurl': userurl,
         'user': user,
+        'numberOfWords': numberOfWords,
+        'percentageOfProgress': percentageOfProgress,
     }
     return render(request, 'collect_words/userhome.html', context)
 
 def quiz(request, userurl):
-    word = Words.objects.filter(user=userurl).order_by("?").first()
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    registeredUser = Users.objects.get(userId=userurl)
+    word = Words.objects.filter(user=registeredUser).order_by("?").first()
     context = {
         'word': word,
         'userurl': userurl,
@@ -41,10 +49,13 @@ def quiz(request, userurl):
     return render(request, 'collect_words/quiz.html', context)
 
 def wordlist(request, userurl):
-    words = Words.objects.all()
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    registeredUser = Users.objects.get(userId=userurl)
+    words = Words.objects.filter(user=registeredUser)
     context = {
         'words': words,
         'userurl': userurl,
+        'user': user,
     }
     return render(request, 'collect_words/list.html', context)
 

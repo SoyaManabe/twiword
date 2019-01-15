@@ -8,7 +8,6 @@ def top_page(request):
     #return render(request,'user_auth/top.html', {'user': user})
     context = {
         'user': user,
-        'userurl': 1,
     }
-    return render(request,'collect_words/userhome.html', context)
+    return render(request,'user_auth/top.html', context)
     
