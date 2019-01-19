@@ -19,9 +19,8 @@
                         <p>動詞</p>
                     {% endif %}
                     <h4>元のツイート:</h4>
-                    <p>{{ word.tweet }}</p>
-                    <p>覚えた: <input type="checkbox"></p>
-                    <a class='btn btn-info' href="{% url 'collect:quiz' userurl%}">NEXT</a>                    
+                    <p>{{ word.tweet }}</p>   
+                    <a class='btn btn-info' href="{% url 'collect:quiz' userurl%}">まだ</a>                    
                 </div>
             </article>
         </div>

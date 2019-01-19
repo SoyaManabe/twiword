@@ -24,11 +24,13 @@ def catch(request):
 
 def userhome(request, userurl):
     user = UserSocialAuth.objects.get(user_id=request.user.id)
-    registeredUser = Users.objects.get(userId=userurl)
-    words = Words.objects.filter(user=registeredUser)
+    words = Words.objects.filter(owner=user.access_token['user_id'])
     numberOfWords = words.count()
     numberOfCompleted = words.filter(quiz=True).count()
-    percentageOfProgress = numberOfCompleted / numberOfWords * 100
+    if numberOfWords:
+        percentageOfProgress = numberOfCompleted / numberOfWords * 100
+    else:
+        percentageOfProgress = 'N/A'
     context = {
         'words': words,
         'userurl': userurl,
@@ -40,8 +42,8 @@ def userhome(request, userurl):
 
 def quiz(request, userurl):
     user = UserSocialAuth.objects.get(user_id=request.user.id)
-    registeredUser = Users.objects.get(userId=userurl)
-    word = Words.objects.filter(user=registeredUser).order_by("?").first()
+    word = Words.objects.filter(owner=user.access_token['user_id']).order_by("?").first()
+    print(user)
     context = {
         'word': word,
         'userurl': userurl,
@@ -50,8 +52,7 @@ def quiz(request, userurl):
 
 def wordlist(request, userurl):
     user = UserSocialAuth.objects.get(user_id=request.user.id)
-    registeredUser = Users.objects.get(userId=userurl)
-    words = Words.objects.filter(user=registeredUser)
+    words = Words.objects.filter(owner=user.access_token['user_id'])
     context = {
         'words': words,
         'userurl': userurl,
