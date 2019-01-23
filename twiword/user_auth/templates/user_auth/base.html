@@ -10,12 +10,12 @@
     <body>
         <header>
                 <nav class="navbar navbar-expand navbar-light bg-light">
-                        <a class="navbar-brand" href="{% url 'collect:index' %}"><img src="{% static "collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png" %}" alt=""></a>
+                        <a class="navbar-brand" href="{% url 'user_auth:index' %}"><img src="{% static 'collect_words/sources/logo/1_Primary_logo_on_transparent_295x65.png' %}" alt=""></a>
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">HOME</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">Quiz</a></li>
-                            <li class="nav-item active"><a class="nav-link" href="{% url 'collect:index' %}">Word List</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'collect:index' %}">SignOut</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user_auth:index' %}">HOME</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user_auth:index' %}">Quiz</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user_auth:index' %}">Word List</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'social:begin' 'twitter' %}">SignIn</a></li>
                         </ul>
                 </nav>           
         </header>
@@ -26,10 +26,10 @@
                 <div class="container">
                     <h5>Links</h5>
                     <ul class="bd-footer-links list-unstyled">
-                        <li><a href="{% url 'collect:index' %}">HOME</a></li>
-                        <li><a href="{% url 'collect:index' %}">Quiz</a></li>
-                        <li><a href="{% url 'collect:index' %}">Word List</a></li>
-                        <li><a href="{% url 'collect:index' %}">SignOut</a></li>
+                        <li><a href="{% url 'user_auth:index' %}">HOME</a></li>
+                        <li><a href="{% url 'user_auth:index' %}">Quiz</a></li>
+                        <li><a href="{% url 'user_auth:index' %}">Word List</a></li>
+                        <li><a href="{% url 'social:begin' 'twitter' %}">SignIn</a></li>
                     </ul>
                     <small>&copy; 2019 TwiWord.</small>
                 </div>

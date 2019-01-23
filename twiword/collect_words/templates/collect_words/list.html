@@ -16,11 +16,29 @@
                                             <tr>
                                             <td>{{ word.trans }}</td>
                                             <td>{{ word.word }}</td>
-                                            <td>{{ word.category }}</td>
+                                            <td>
+                                                {% if word.category == 5 %}
+                                                    名詞
+                                                {% else %}
+                                                    動詞
+                                                {% endif %}
+                                            </td>
                                             {% if word.quiz == True %}
-                                                <td><input class="select" type="checkbox" checked></td>
+                                                <td>
+                                                    <form method="post" action="{% url 'collect:list' userurl%}">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="wordId" value={{ word.id }}>
+                                                        <button class='btn btn-primary my-3' type="submit" >Quizに登録</button>
+                                                    </form>
+                                                </td>
                                             {% else %}
-                                                <td><input class="select" type="checkbox" ></td>
+                                                <td>
+                                                    <form method="post" action="{% url 'collect:list' userurl%}">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="wordId" value={{ word.id }}>
+                                                        <button class='btn btn-danger my-3' type="submit" >Quizから消す</button>
+                                                    </form>
+                                                </td>
                                             {% endif %}
                                             </tr>
                                             
@@ -30,7 +48,6 @@
                                 {% endif %}
                         </table>
                 </article>
-                <a class="btn btn-info my-3" href="{% url 'collect:userhome' userurl %}">Update</a>
             </div>
     {% endblock %}
         

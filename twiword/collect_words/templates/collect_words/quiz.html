@@ -20,7 +20,14 @@
                     {% endif %}
                     <h4>元のツイート:</h4>
                     <p>{{ word.tweet }}</p>   
-                    <a class='btn btn-info' href="{% url 'collect:quiz' userurl%}">まだ</a>                    
+                    <div>
+                        <form method="post" action="{% url 'collect:quiz' userurl%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="wordId" value={{ word.id }}>
+                            <button class='btn btn-info my-3' type="submit" >覚えた</button>
+                        </form>
+                        <a class='btn btn-info my-3' href="{% url 'collect:quiz' userurl%}">まだ</a>  
+                    </div>               
                 </div>
             </article>
         </div>
