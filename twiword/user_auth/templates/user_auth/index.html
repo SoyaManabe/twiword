@@ -1,10 +1,10 @@
-{% extends 'collect_words/base.html' %}
+{% extends 'user_auth/base.html' %}
     {% block content %}
     {% load static %}
             <div id="main">
                 <article>
                     <div id="main_visu">
-                        <p><img src="{% static "collect_words/sources/logo/main_visu.png" %}" alt="mainvis"></p>
+                        <p><img class="img-responsive" src="{% static 'collect_words/sources/005KZ1868_TP_V4.jpg' %}" alt="mainvis"></p>
                     </div>
                     <div id="How to Use">
                         <h1>How to Use</h1>
@@ -12,8 +12,8 @@
                         <h2>Sign in this app</h2>
                         <h2>collect words from your tweets</h2>
                         <h2>solving quiz!</h2>
-                        <a class="btn btn-info" href="{% url 'collect:userhome' userurl %}">Get Start</a>
+                        <button class="btn btn-info" type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">GetStart</button>
                     </div>
                 </article>
             </div>
-    {% endblock %}
+    {% endblock %} 

@@ -1,0 +1,19 @@
+{% extends 'collect_words/base.html' %}
+{% block content %}
+{% load static %}
+<div>
+    <div>
+        <!--
+        <p><b>ScreenName</b>:{{ user.access_token.screen_name }}</p>
+        <p><b>UserId</b>:{{ user.access_token.user_id }}</p>
+        <p><b>OAuthTokenSecret</b>:{{ user.access_token.oauth_token_secret }}</p>
+        <p><b>OAuthToken</b>:{{ user.access_token.oauth_token }}</p>
+        <p><b>AuthTime</b>:{{ user.extra_data.auth_time }}</p>  
+        -->
+        <h1>ようこそ{{ user.access_token.screen_name }}さん</h1>
+    </div>
+    <div>
+        <a class="btn btn-info" href="{% url 'collect:userhome'  user.access_token.user_id  %}">マイページへ</a>
+    </div>
+</div>
+{% endblock %}

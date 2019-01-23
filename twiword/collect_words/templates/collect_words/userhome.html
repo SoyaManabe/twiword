@@ -3,7 +3,6 @@
     {% load static %}
                     <div id="col">
                         <div id="main_visu">
-                            <p><img src="{% static "collect_words/sources/logo/main_visu.png" %}" alt="mainvis"></p>
                         </div>
                         <p id="col"><strong>You can add new vocaburaries from Twitter!</strong></p>
                         <a class="btn btn-info" href="{% url 'collect:result' userurl %}">Collect from Twitter!</a>
@@ -13,20 +12,15 @@
                             <div class="col-3 float-left my-3 ">
                                 <aside>
                                     <img id="profimg" src="{% static "collect_words/sources/a3D2dDGx_bigger.jpg" %}" alt="twitterimg">
-                                        <h2>UserName</h2>
-                                        <h3>@UserName</h3>
+                                        <h3>ようこそ@{{ user.access_token.screen_name }}さん</h3>
+
                                 </aside>
                             </div>
                             <div class="col-9 float-left my-3">
                                 <h3>Contributions</h3>
-                                <h3>Now you have 111 words</h3>
+                                <h3>Now you have {{ numberOfWords }} words</h3>
                                 <h3>Persectage of your achievement</h3>
-                                <h3>Contributions</h3>
-                                <h3>Now you have 111 words</h3>
-                                <h3>Persectage of your achievement</h3>
-                                <h3>Contributions</h3>
-                                <h3>Now you have 111 words</h3>
-                                <h3>Persectage of your achievement</h3>
+                                <h3>{{ percentageOfProgress }} %</h3>
                             </div>
                         </div>    
        {% endblock %}

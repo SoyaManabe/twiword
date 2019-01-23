@@ -22,3 +22,8 @@ footer {
     clear: left;
 }
 
+.quizbutton{
+    display: inline-block;
+}
+
+

@@ -2,10 +2,22 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .sepjap import sep
 from .models import Words
+from .models import Users
+from .forms import QuizForm
+from django.contrib.auth.decorators import login_required
+from social_django.models import UserSocialAuth
 
 #indexは移動するかもしれません
-def index(request):
-    return render(request, 'collect_words/index.html')
+@login_required
+def top_page(request):
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    userurl = request.user.id
+    #return render(request,'user_auth/top.html', {'user': user})
+    context = {
+        'user':user,
+        'userurl': userurl,
+    }
+    return render(request,'user_auth/top.html', context)
 
 def catch(request):
     texts='私はよく柿食う客だよ。'
@@ -19,30 +31,85 @@ def catch(request):
     print(results)
     return render(request, 'collect_words/catch.html',context)
 
+@login_required
 def userhome(request, userurl):
-    words = Words.objects.all()
-    context = {
-        'words': words,
-        'userurl': userurl,
-    }
-    return render(request, 'collect_words/userhome.html', context)
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    if permittion(user, userurl):
+        words = Words.objects.filter(owner=user.access_token['user_id'])
+        numberOfWords = words.count()
+        numberOfCompleted = words.filter(quiz=True).count()
+        if numberOfWords:
+            percentageOfProgress = round(numberOfCompleted / numberOfWords * 100, 2)
+        else:
+            percentageOfProgress = 'N/A'
+        context = {
+            'words': words,
+            'userurl': userurl,
+            'user': user,
+            'numberOfWords': numberOfWords,
+            'percentageOfProgress': percentageOfProgress,
+        }
+        return render(request, 'collect_words/userhome.html', context)
+    else:
+        return errorlog()
 
+@login_required
 def quiz(request, userurl):
-    word = Words.objects.filter(user=userurl).order_by("?").first()
-    context = {
-        'word': word,
-        'userurl': userurl,
-    }
-    return render(request, 'collect_words/quiz.html', context)
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    if permittion(user, userurl):
+        if request.method == "POST":
+            wordId = request.POST.get("wordId", "")
+            word = Words.objects.get(id=int(wordId))
+            word.quiz = False
+            word.save()
+            #word = Words.objects.filter(owner=user.access_token['user_id'],quiz=True).order_by("?").first()
+            word = Words.objects.filter(owner=userurl, quiz=True).order_by("?").first()
+            context = {
+                'word': word,
+                'userurl': userurl,
+            }
+            return render(request, 'collect_words/quiz.html', context)
+        if request.method == "GET":
+            #word = Words.objects.filter(owner=user.access_token['user_id'], quiz=True).order_by("?").first()
+            word = Words.objects.filter(owner=userurl, quiz=True).order_by("?").first()
+            context = {
+                'word': word,
+                'userurl': userurl,
+            }
+            return render(request, 'collect_words/quiz.html', context)
+    else:
+        return errorlog()
 
+@login_required
 def wordlist(request, userurl):
-    words = Words.objects.all()
-    context = {
-        'words': words,
-        'userurl': userurl,
-    }
-    return render(request, 'collect_words/list.html', context)
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    if permittion(user, userurl):
+        if request.method == "POST":
+            wordId = request.POST.get("wordId", "")
+            word = Words.objects.get(id=int(wordId))
+            word.quiz = not(word.quiz)
+            word.save()
+            #words = Words.objects.filter(owner=user.access_token['user_id'])
+            words = Words.objects.filter(owner=userurl)
+            context = {
+                'words': words,
+                'userurl': userurl,
+                'user': user,
+            }
+            return render(request, 'collect_words/list.html', context)
+        if request.method == "GET":
+            #words = Words.objects.filter(owner=user.access_token['user_id'])
+            words = Words.objects.filter(owner=userurl)
+            context = {
+                'words': words,
+                'userurl': userurl,
+                'user': user,
+            }
+            return render(request, 'collect_words/list.html', context)
+    else:
+        return errorlog()
 
+@login_required
 def result(request, userurl):
     words = Words.objects.all()
     context = {
@@ -51,3 +118,11 @@ def result(request, userurl):
     }
     return render(request, 'collect_words/result.html', context)
 
+def permittion(user, userurl):
+    if not user.access_token["user_id"] == str(userurl):
+        return False
+    else:
+        return True
+
+def errorlog():
+    return HttpResponse("ERROR")
