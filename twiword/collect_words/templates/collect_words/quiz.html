@@ -21,12 +21,14 @@
                     <h4>元のツイート:</h4>
                     <p>{{ word.tweet }}</p>   
                     <div>
-                        <form method="post" action="{% url 'collect:quiz' userurl%}">
-                            {% csrf_token %}
-                            <input type="hidden" name="wordId" value={{ word.id }}>
-                            <button class='btn btn-info my-3' type="submit" >覚えた</button>
-                        </form>
-                        <a class='btn btn-info my-3' href="{% url 'collect:quiz' userurl%}">まだ</a>  
+                        {% if word.id %}
+                            <form method="post" action="{% url 'collect:quiz' userurl%}">
+                                {% csrf_token %}
+                                <input type="hidden" name="wordId" value={{ word.id }}>
+                                <button class='btn btn-info my-3' type="submit" >覚えた</button>
+                            </form>
+                            <a class='btn btn-info my-3' href="{% url 'collect:quiz' userurl%}">まだ</a> 
+                        {% endif %} 
                     </div>               
                 </div>
             </article>

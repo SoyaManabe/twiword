@@ -5,46 +5,9 @@
                     <h1>New Word List</h1>
                 </article>
                 <div id="new_word">
-                    <h2>今日の授業が終わった</h2>
-                    <h3>Today's class has done</h3>
-                    <table>
-                        <tr>
-                            <th>英語</th>
-                            <th>日本語</th>
-                            <th>品詞</th>
-                            <th>登録</th>
-                        </tr>
-                        <tr>
-                            <td>today</td>
-                            <td>今日</td>
-                            <td>名詞</td>
-                            <td>
-                                <input class="select" type="checkbox" value="addlist">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>class</td>
-                            <td>授業</td>
-                            <td>名詞</td>
-                            <td><input class="select" type="checkbox" value="addlist"></td>
-                        </tr>
-                    </table>
-                    <h2>これはりんご</h2>
-                    <h3>This is an apple</h3>
-                    <table>
-                        <tr>
-                            <td>this</td>
-                            <td>これ</td>
-                            <td>名詞</td>
-                            <td><input class="select" type="checkbox" value="addlist"></td>
-                        </tr>
-                        <tr>
-                            <td>apple</td>
-                            <td>りんご</td>
-                            <td>名詞</td>
-                            <td><input class="select" type="checkbox" value="addlist"></td>
-                        </tr>
-                    </table>
+                    {% for result in results %}
+                        <p>{{ result }}</p>
+                    {% endfor %}
                 </div>
                 <div></div>   
                     <a class='btn btn-success' href="{% url 'collect:userhome' userurl%}">HOME</a>

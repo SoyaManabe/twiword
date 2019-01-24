@@ -23,7 +23,7 @@
                                                     動詞
                                                 {% endif %}
                                             </td>
-                                            {% if word.quiz == True %}
+                                            {% if word.quiz == False %}
                                                 <td>
                                                     <form method="post" action="{% url 'collect:list' userurl%}">
                                                         {% csrf_token %}

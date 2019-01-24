@@ -15,3 +15,5 @@ class Words(models.Model):
 class Users(models.Model):
     screenName = models.CharField(max_length=50)
     userId = models.CharField(max_length=100)
+    lastTweet = models.CharField(max_length=100, default='')
+    imgUrl = models.CharField(max_length=100, default='')

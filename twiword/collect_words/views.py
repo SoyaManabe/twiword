@@ -6,12 +6,14 @@ from .models import Users
 from .forms import QuizForm
 from django.contrib.auth.decorators import login_required
 from social_django.models import UserSocialAuth
+from .collect import collect, userImg
+from .lanproc import language
 
 #indexは移動するかもしれません
 @login_required
 def top_page(request):
     user = UserSocialAuth.objects.get(user_id=request.user.id)
-    userurl = request.user.id
+    userurl = user.access_token['user_id']
     #return render(request,'user_auth/top.html', {'user': user})
     context = {
         'user':user,
@@ -35,6 +37,14 @@ def catch(request):
 def userhome(request, userurl):
     user = UserSocialAuth.objects.get(user_id=request.user.id)
     if permittion(user, userurl):
+        register = Users.objects.filter(userId=user.access_token['user_id'])
+        if not register:
+            imgUrl = userImg(user.access_token['screen_name'])
+            newUser = Users.objects.create(screenName=user.access_token['screen_name'],
+                                   userId=user.access_token['user_id'],
+                                   imgUrl=imgUrl, 
+                                   )
+        register = Users.objects.get(userId=user.access_token['user_id'])
         words = Words.objects.filter(owner=user.access_token['user_id'])
         numberOfWords = words.count()
         numberOfCompleted = words.filter(quiz=True).count()
@@ -46,8 +56,10 @@ def userhome(request, userurl):
             'words': words,
             'userurl': userurl,
             'user': user,
+            'register': register,
             'numberOfWords': numberOfWords,
             'percentageOfProgress': percentageOfProgress,
+            
         }
         return render(request, 'collect_words/userhome.html', context)
     else:
@@ -111,12 +123,23 @@ def wordlist(request, userurl):
 
 @login_required
 def result(request, userurl):
-    words = Words.objects.all()
-    context = {
-        'words': words,
-        'userurl': userurl,
-    }
-    return render(request, 'collect_words/result.html', context)
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    if permittion(user, userurl):
+        words = Words.objects.all()
+        newlist = []
+        screenName = user.access_token['screen_name']
+        results = collect(screenName, newlist)
+        for result in results:
+            processes = language(result)
+            
+        context = {
+            'words': words,
+            'userurl': userurl,
+            'results': results,
+        }
+        return render(request, 'collect_words/result.html', context)
+    else:
+        return errorlog()
 
 def permittion(user, userurl):
     if not user.access_token["user_id"] == str(userurl):
