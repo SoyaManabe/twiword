@@ -98,17 +98,28 @@ def wordlist(request, userurl):
     if permittion(user, userurl):
         if request.method == "POST":
             wordId = request.POST.get("wordId", "")
-            word = Words.objects.get(id=int(wordId))
-            word.quiz = not(word.quiz)
-            word.save()
-            #words = Words.objects.filter(owner=user.access_token['user_id'])
-            words = Words.objects.filter(owner=userurl)
-            context = {
-                'words': words,
-                'userurl': userurl,
-                'user': user,
-            }
-            return render(request, 'collect_words/list.html', context)
+            if request.POST.get("delete") == "True":
+                    word = Words.objects.get(id=int(wordId))
+                    word.delete()
+                    words = Words.objects.filter(owner=userurl)
+                    context = {
+                        'words': words,
+                        'userurl': userurl,
+                        'user': user,
+                    }
+                    return render(request, 'collect_words/list.html', context)
+            else:
+                word = Words.objects.get(id=int(wordId))
+                word.quiz = not(word.quiz)
+                word.save()
+                #words = Words.objects.filter(owner=user.access_token['user_id'])
+                words = Words.objects.filter(owner=userurl)
+                context = {
+                    'words': words,
+                    'userurl': userurl,
+                    'user': user,
+                }
+                return render(request, 'collect_words/list.html', context)
         if request.method == "GET":
             #words = Words.objects.filter(owner=user.access_token['user_id'])
             words = Words.objects.filter(owner=userurl)
