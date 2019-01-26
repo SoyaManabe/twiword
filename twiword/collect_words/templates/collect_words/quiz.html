@@ -4,20 +4,14 @@
             <article>
                 <h1>Quiz</h1>
                 {% if word %}
-                            <h2>{{ word.trans }}</h2>
+                            <h2>{{ word.word }}</h2>
                 {% else %}
                     <p>No words available</p>
                 {% endif %}
                 <br>
                 <input class="btn btn-info" type="button" value="Answer">
                 <div id="answer">
-                    <h2>{{ word.word }}</h2>
-                    <h4>品詞</h4>
-                    {% if word.category == 5 %}
-                        <p>名詞</p>
-                    {% else %}
-                        <p>動詞</p>
-                    {% endif %}
+                    <p>{{ word.trans }}</p>
                     <h4>元のツイート:</h4>
                     <p>{{ word.tweet }}</p>   
                     <div>

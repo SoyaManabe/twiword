@@ -8,6 +8,9 @@ from django.contrib.auth.decorators import login_required
 from social_django.models import UserSocialAuth
 from .collect import collect, userImg
 from .lanproc import language
+import urllib.request
+import urllib.parse
+import xml.etree.ElementTree as ET
 
 #indexは移動するかもしれません
 @login_required
@@ -98,17 +101,28 @@ def wordlist(request, userurl):
     if permittion(user, userurl):
         if request.method == "POST":
             wordId = request.POST.get("wordId", "")
-            word = Words.objects.get(id=int(wordId))
-            word.quiz = not(word.quiz)
-            word.save()
-            #words = Words.objects.filter(owner=user.access_token['user_id'])
-            words = Words.objects.filter(owner=userurl)
-            context = {
-                'words': words,
-                'userurl': userurl,
-                'user': user,
-            }
-            return render(request, 'collect_words/list.html', context)
+            if request.POST.get("delete") == "True":
+                    word = Words.objects.get(id=int(wordId))
+                    word.delete()
+                    words = Words.objects.filter(owner=userurl)
+                    context = {
+                        'words': words,
+                        'userurl': userurl,
+                        'user': user,
+                    }
+                    return render(request, 'collect_words/list.html', context)
+            else:
+                word = Words.objects.get(id=int(wordId))
+                word.quiz = not(word.quiz)
+                word.save()
+                #words = Words.objects.filter(owner=user.access_token['user_id'])
+                words = Words.objects.filter(owner=userurl)
+                context = {
+                    'words': words,
+                    'userurl': userurl,
+                    'user': user,
+                }
+                return render(request, 'collect_words/list.html', context)
         if request.method == "GET":
             #words = Words.objects.filter(owner=user.access_token['user_id'])
             words = Words.objects.filter(owner=userurl)
@@ -145,28 +159,62 @@ def extract(request, userurl):
         if request.method == "POST":
             if request.POST.get("add")=="True":
                 separated_word = request.POST.get("separated_word")
-                text = request.POST.get("text")
-                user = Users.objects.get(id=request.user.id)
-                Words.objects.create(user=user,
-                                     tweet=text,
-                                     word=separated_word,
-                                     trans="練習",
-                                     owner=userurl,
-                                     )
-                name = request.POST.get("name")
-                profile_image_url = request.POST.get("profile_image_url", "")
-                separated_words = language(text)
-                for i in range(len(separated_words)):
-                    if Words.objects.filter(word=separated_words[i]).exists():
-                        separated_words[i] = "."
-                context = {
-                    'name': name,
-                    'profile_image_url': profile_image_url,
-                    'text': text,
-                    'separated_words': separated_words,
-                    'userurl': userurl,
+                query = {
+                    'Dic':'EJdict',
+                    'Word':separated_word,
+                    'Scope':'HEADWORD',
+                    'Match':'STARTWITH',
+                    'Merge':'AND',
+                    'Prof':'XHTML',
+                    'PageSize':'1',
+                    'PageIndex':'0',
                 }
-                return render(request, 'collect_words/extract.html', context)
+                p = urllib.parse.urlencode(query)
+                url = 'http://public.dejizo.jp/NetDicV09.asmx/SearchDicItemLite?' + p
+                req = urllib.request.Request(url)
+                with urllib.request.urlopen(req) as response:
+                    xml_string = response.read()
+                root = ET.fromstring(xml_string)
+                print(root[1].text)
+                if int(root[1].text) == 0:
+                    return HttpResponse("No word found")
+                else:
+                    dictId = root[3][0][0].text
+                    params = {
+                        'Dic':'EJdict',
+                        'Item':dictId,
+                        'Prof':'XHTML',
+                        'Loc':'',
+                    }
+                    p = urllib.parse.urlencode(params)
+                    url = 'http://public.dejizo.jp/NetDicV09.asmx/GetDicItemLite?' + p
+                    req = urllib.request.Request(url)
+                    with urllib.request.urlopen(req) as response:
+                        xml_string = response.read()
+                    root = ET.fromstring(xml_string)
+                    trans = root[2][0][0].text
+                    text = request.POST.get("text")
+                    user = Users.objects.get(id=request.user.id)
+                    Words.objects.create(user=user,
+                                        tweet=text,
+                                        word=separated_word,
+                                        trans=trans,
+                                        owner=userurl,
+                                        )
+                    name = request.POST.get("name")
+                    profile_image_url = request.POST.get("profile_image_url", "")
+                    separated_words = language(text)
+                    for i in range(len(separated_words)):
+                        if Words.objects.filter(word=separated_words[i]).exists():
+                            separated_words[i] = "."
+                    context = {
+                        'name': name,
+                        'profile_image_url': profile_image_url,
+                        'text': text,
+                        'separated_words': separated_words,
+                        'userurl': userurl,
+                    }
+                    return render(request, 'collect_words/extract.html', context)
             else:
                 name = request.POST.get("name")
                 profile_image_url = request.POST.get("profile_image_url", "")
@@ -175,7 +223,6 @@ def extract(request, userurl):
                 for i in range(len(separated_words)):
                     if Words.objects.filter(word=separated_words[i]).exists():
                         separated_words[i] = "."
-                print(separated_words)
                 context = {
                     'name': name,
                     'profile_image_url': profile_image_url,
@@ -197,3 +244,19 @@ def permittion(user, userurl):
 
 def errorlog():
     return HttpResponse("ERROR")
+
+def translate(word):
+    url = 'http://public.dejizo.jp/NetDicV09.asmx/SearchDicItemLite'
+    query = {
+        'Dic':'EJdict',
+        'Word':'infinity',
+        'Scope':'HEADWORD',
+        'Match':'STARTWITH',
+        'Merge':'AND',
+        'Prof':'XHTML',
+        'PageSize':'1',
+        'PageIndex':'0',
+    }
+    r = request.get(url, params=query)
+    print("response", r.json())
+    return ""

@@ -14,20 +14,13 @@
                                 {% if words %}
                                     {% for word in words %}
                                             <tr>
-                                            <td>{{ word.trans }}</td>
                                             <td>{{ word.word }}</td>
-                                            <td>
-                                                {% if word.category == 5 %}
-                                                    名詞
-                                                {% else %}
-                                                    動詞
-                                                {% endif %}
-                                            </td>
+                                            <td>{{ word.trans }}</td>
                                             {% if word.quiz == False %}
                                                 <td>
                                                     <form method="post" action="{% url 'collect:list' userurl%}">
                                                         {% csrf_token %}
-                                                        <input type="hidden" name="wordId" value={{ word.id }}>
+                                                        <input type="hidden" name="wordId" value="{{ word.id }}">
                                                         <button class='btn btn-primary my-3' type="submit" >Quizに登録</button>
                                                     </form>
                                                 </td>
@@ -35,11 +28,19 @@
                                                 <td>
                                                     <form method="post" action="{% url 'collect:list' userurl%}">
                                                         {% csrf_token %}
-                                                        <input type="hidden" name="wordId" value={{ word.id }}>
-                                                        <button class='btn btn-danger my-3' type="submit" >Quizから消す</button>
+                                                        <input type="hidden" name="wordId" value="{{ word.id }}">
+                                                        <button class='btn btn-warning my-3' type="submit" >Quizから消す</button>
                                                     </form>
                                                 </td>
                                             {% endif %}
+                                            <td>
+                                                    <form method="post" action="{% url 'collect:list' userurl%}">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="delete" value="True">
+                                                        <input type="hidden" name="wordId" value="{{ word.id }}">
+                                                        <button class='btn btn-danger my-3' type="submit" >削除</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             
                                     {% endfor %}
