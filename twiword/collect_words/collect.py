@@ -12,12 +12,26 @@ def userImg(screenName):
     imgUrl = user.profile_image_url
     return imgUrl
 
+"""
+keys of get_user
+id...twitterid(int)
+id_str...twitterid(str)
+name...accountname
+screen_name...@sdffg
+
+
+"""
 
 def collect(screenName, list):
     lists = api.list_timeline(screenName, "twiword")
     i=0
     for l in lists:
-        list.append(l.__dict__["text"])
+        datas = {}
+        datas['name'] = l.user.name
+        datas['screen_name'] = l.user.screen_name
+        datas['profile_image_url'] = l.user.profile_image_url
+        datas['text'] = l.text
+        list.append(datas)
         i += 1
         if i == 5:
             break

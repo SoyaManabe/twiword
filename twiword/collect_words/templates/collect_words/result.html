@@ -1,16 +1,26 @@
 {% extends 'collect_words/base.html' %}
     {% block content %}
-            <div id="main" class='my-3'>
-                <article>
-                    <h1>New Word List</h1>
-                </article>
-                <div id="new_word">
-                    {% for result in results %}
-                        <p>{{ result }}</p>
-                    {% endfor %}
+    <div id="main" class="my-3">
+        <h1>New Tweet List</h1>
+        <div id="tweetList">
+            {% for result in results %}
+                <div class="card border-primary mb-3">
+                    <div>
+                        <img src={{ result.profile_image_url }} alt="twitterimg">
+                    </div>
+                    <h3>{{ result.name }}</h3>
+                    <p>@{{ result.screen_name }}</p>
+                    <p>{{ result.text }}</p>
+                    <form method="post" action="{% url 'collect:extract' userurl%}">
+                        {% csrf_token %}
+                        <input type="hidden" name="text" value="{{ result.text }}">
+                        <input type="hidden" name="name" value="{{ result.name }}">
+                        <input type="hidden" name="profile_image_url" value="{{ result.profile_image_url }}">
+                        <input type="hidden" name="add" value="False">
+                        <button class='btn btn-info my-3' type="submit" >解析</button>
+                    </form>
                 </div>
-                <div></div>   
-                    <a class='btn btn-success' href="{% url 'collect:userhome' userurl%}">HOME</a>
-                </div>
-            </div>
-        {% endblock %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
