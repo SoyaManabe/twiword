@@ -14,15 +14,8 @@
                                 {% if words %}
                                     {% for word in words %}
                                             <tr>
-                                            <td>{{ word.trans }}</td>
                                             <td>{{ word.word }}</td>
-                                            <td>
-                                                {% if word.category == 5 %}
-                                                    名詞
-                                                {% else %}
-                                                    動詞
-                                                {% endif %}
-                                            </td>
+                                            <td>{{ word.trans }}</td>
                                             {% if word.quiz == False %}
                                                 <td>
                                                     <form method="post" action="{% url 'collect:list' userurl%}">
