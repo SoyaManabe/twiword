@@ -7,5 +7,6 @@ urlpatterns = [
     path('<int:userurl>/quiz', views.quiz, name='quiz'),
     path('<int:userurl>/list', views.wordlist, name='list'),
     path('<int:userurl>/result', views.result, name='result'),
+    path('<int:userurl>/extract', views.extract, name='extract'),
     path('top/', views.top_page, name='top'),
 ]

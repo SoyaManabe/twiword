@@ -47,7 +47,7 @@ def userhome(request, userurl):
         register = Users.objects.get(userId=user.access_token['user_id'])
         words = Words.objects.filter(owner=user.access_token['user_id'])
         numberOfWords = words.count()
-        numberOfCompleted = words.filter(quiz=True).count()
+        numberOfCompleted = words.filter(quiz=False).count()
         if numberOfWords:
             percentageOfProgress = round(numberOfCompleted / numberOfWords * 100, 2)
         else:
@@ -129,15 +129,63 @@ def result(request, userurl):
         newlist = []
         screenName = user.access_token['screen_name']
         results = collect(screenName, newlist)
-        for result in results:
-            processes = language(result)
-            
         context = {
             'words': words,
             'userurl': userurl,
             'results': results,
         }
         return render(request, 'collect_words/result.html', context)
+    else:
+        return errorlog()
+
+@login_required
+def extract(request, userurl):
+    user = UserSocialAuth.objects.get(user_id=request.user.id)
+    if permittion(user, userurl):
+        if request.method == "POST":
+            if request.POST.get("add")=="True":
+                separated_word = request.POST.get("separated_word")
+                text = request.POST.get("text")
+                user = Users.objects.get(id=request.user.id)
+                Words.objects.create(user=user,
+                                     tweet=text,
+                                     word=separated_word,
+                                     trans="練習",
+                                     owner=userurl,
+                                     )
+                name = request.POST.get("name")
+                profile_image_url = request.POST.get("profile_image_url", "")
+                separated_words = language(text)
+                for i in range(len(separated_words)):
+                    if Words.objects.filter(word=separated_words[i]).exists():
+                        separated_words[i] = "."
+                context = {
+                    'name': name,
+                    'profile_image_url': profile_image_url,
+                    'text': text,
+                    'separated_words': separated_words,
+                    'userurl': userurl,
+                }
+                return render(request, 'collect_words/extract.html', context)
+            else:
+                name = request.POST.get("name")
+                profile_image_url = request.POST.get("profile_image_url", "")
+                text = request.POST.get("text", "")
+                separated_words = language(text)
+                for i in range(len(separated_words)):
+                    if Words.objects.filter(word=separated_words[i]).exists():
+                        separated_words[i] = "."
+                print(separated_words)
+                context = {
+                    'name': name,
+                    'profile_image_url': profile_image_url,
+                    'text': text,
+                    'separated_words': separated_words,
+                    'userurl': userurl,
+                }
+                return render(request, 'collect_words/extract.html', context)
+        else:
+            return errorlog()
     else:
         return errorlog()
 

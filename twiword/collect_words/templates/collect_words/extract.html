@@ -1,0 +1,29 @@
+{% extends 'collect_words/base.html' %}
+    {% block content %}
+    <div id="main" class="my-3">
+        <h1>Extract completed</h1>
+        <div>
+            <div>
+                <img src={{ profile_image_url }} alt="twitterimg">
+            </div>
+            <h3>{{ name }}</h3>
+            <p>{{ text }}</p>
+        </div>
+        <hr>
+        <div id="extract">
+            {% for separated_word in separated_words %}
+                {% if separated_word|length  > 1 %}
+                    <form method="post" action="{% url 'collect:extract' userurl%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="text" value="{{ text }}">
+                            <input type="hidden" name="name" value="{{ name }}">
+                            <input type="hidden" name="profile_image_url" value="{{ profile_image_url }}">
+                            <input type="hidden" name="separated_word" value="{{ separated_word }}">
+                            <input type="hidden" name="add" value="True">
+                            <button class='btn btn-primary my-1' type="submit" >{{ separated_word }}</button>
+                    </form>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
